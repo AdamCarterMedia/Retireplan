@@ -1,0 +1,118 @@
+/* public/assets/css/styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3, legend {
+    color: #333;
+}
+
+
+
+/* Tabbed Interface */
+#tabs {
+    margin: 20px;
+}
+
+.tab-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background-color: #ddd;
+}
+
+.tab-links li {
+    margin: 0;
+}
+
+.tab-links li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.tab-links li.active a,
+.tab-links li a:hover {
+    background-color: #bbb;
+}
+
+.tab-content .tab {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.tab-content .tab.active {
+    display: block;
+}
+
+/* Simulation Grid */
+.grid-container {
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+    margin: 20px 0;
+}
+
+#results-grid {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#results-grid th,
+#results-grid td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#results-grid th {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+    z-index: 2;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    z-index: 10;
+}
+
+/* Form Styles */
+form {
+    margin: 10px 0;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input,
+form select {
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}

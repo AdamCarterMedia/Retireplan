@@ -1,163 +1,119 @@
 <?php
 // templates/pages/fixed-income.php
 ?>
-<section class="collapsible">
-    <h2 class="collapsible-header">Fixed Income</h2>
-    <div class="collapsible-content">
-        <form id="fixed-income-form" method="post">
-            <fieldset>
-                <legend>Fixed Income Streams</legend>
-                <div id="fixed-income-items">
-                    <!-- A single fixed income item is shown by default -->
-                    <div class="fixed-income-item">
-                        <label>Name:</label>
-                        <input type="text" name="fixed_income_name[]" required>
-
-                        <label>Owner:</label>
-                        <select name="fixed_income_owner[]">
-                            <option value="User">User</option>
-                            <option value="Spouse">Spouse</option>
-                        </select>
-
-                        <label>Base Amount (monthly):</label>
-                        <input type="number" step="0.01" name="fixed_income_amount[]" required>
-
-                        <label>Start Year (YYYY):</label>
-                        <input type="text" name="fixed_income_start[]" required>
-
-                        <label>Annual COLA?</label>
-                        <select name="fixed_income_cola[]" class="cola-toggle">
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                        </select>
-
-                        <div class="cola-rate-section" style="display: none;">
-                            <label>COLA Rate (%):</label>
-                            <input type="number" step="0.1" name="fixed_income_cola_rate[]">
-                        </div>
-
-                        <label>Payment Duration:</label>
-                        <select name="fixed_income_duration[]" class="duration-toggle">
-                            <option value="life">For Life</option>
-                            <option value="fixed">Fixed Term</option>
-                        </select>
-
-                        <div class="term-years-section" style="display: none;">
-                            <label>Number of Years (Fixed Term):</label>
-                            <input type="number" name="fixed_income_term_years[]">
-                        </div>
-
-                        <label>Spouse Benefit (%):</label>
-                        <input type="number" step="0.1" name="fixed_income_spouse_benefit[]" required>
-
-                        <button type="button" onclick="removeFixedIncomeItem(this)">Remove</button>
-                    </div>
-                </div>
-                <button type="button" onclick="addFixedIncomeItem()">Add Fixed Income Item</button>
-            </fieldset>
-            <button type="submit">Save Fixed Income</button>
-        </form>
+<section class="mb-4">
+  <h2>Fixed Income</h2>
+  <div id="fixedIncomeAccordion">
+    <!-- Fixed Income Item (Example) -->
+    <div class="card mb-3 fixed-income-item">
+      <div class="card-header" id="fixedIncomeHeading1">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#fixedIncomeCollapse1" aria-expanded="true" aria-controls="fixedIncomeCollapse1">
+          <!-- Summary: You can update this dynamically with calculated values -->
+          <span class="fixed-income-summary">Fixed Income Item Summary</span>
+        </button>
+      </div>
+      <div id="fixedIncomeCollapse1" class="accordion-collapse collapse show" aria-labelledby="fixedIncomeHeading1" data-bs-parent="#fixedIncomeAccordion">
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="fixed_income_name_1">Name:</label>
+              <input type="text" id="fixed_income_name_1" name="fixed_income_name[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_owner_1">Owner:</label>
+              <select id="fixed_income_owner_1" name="fixed_income_owner[]" class="form-select">
+                <option value="User">User</option>
+                <option value="Spouse">Spouse</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_amount_1">Base Amount (monthly):</label>
+              <input type="number" step="0.01" id="fixed_income_amount_1" name="fixed_income_amount[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_start_1">Start Year (YYYY):</label>
+              <input type="text" id="fixed_income_start_1" name="fixed_income_start[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_cola_1">Annual COLA?</label>
+              <select id="fixed_income_cola_1" name="fixed_income_cola[]" class="form-select cola-toggle">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+            <div class="mb-3 cola-rate-section" style="display: none;">
+              <label for="fixed_income_cola_rate_1">COLA Rate (%):</label>
+              <input type="number" step="0.1" id="fixed_income_cola_rate_1" name="fixed_income_cola_rate[]" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_duration_1">Payment Duration:</label>
+              <select id="fixed_income_duration_1" name="fixed_income_duration[]" class="form-select duration-toggle">
+                <option value="life">For Life</option>
+                <option value="fixed">Fixed Term</option>
+              </select>
+            </div>
+            <div class="mb-3 term-years-section" style="display: none;">
+              <label for="fixed_income_term_years_1">If Fixed Term, Number of Years:</label>
+              <input type="number" id="fixed_income_term_years_1" name="fixed_income_term_years[]" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="fixed_income_spouse_benefit_1">Spouse Benefit Percentage:</label>
+              <input type="number" step="0.1" id="fixed_income_spouse_benefit_1" name="fixed_income_spouse_benefit[]" class="form-control" required>
+            </div>
+            <!-- You may include a remove button for dynamic removal if needed -->
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
+  <button type="button" class="btn btn-primary" onclick="addFixedIncomeItem()">Add Fixed Income Item</button>
 </section>
 
 <script>
-// Add a new fixed income item
-function addFixedIncomeItem() {
-    const container = document.getElementById('fixed-income-items');
-    const newItem = document.createElement('div');
-    newItem.classList.add('fixed-income-item');
-    newItem.innerHTML = `
-        <label>Name:</label>
-        <input type="text" name="fixed_income_name[]" required>
-
-        <label>Owner:</label>
-        <select name="fixed_income_owner[]">
-            <option value="User">User</option>
-            <option value="Spouse">Spouse</option>
-        </select>
-
-        <label>Base Amount (monthly):</label>
-        <input type="number" step="0.01" name="fixed_income_amount[]" required>
-
-        <label>Start Year (YYYY):</label>
-        <input type="text" name="fixed_income_start[]" required>
-
-        <label>Annual COLA?</label>
-        <select name="fixed_income_cola[]" class="cola-toggle">
-            <option value="no">No</option>
-            <option value="yes">Yes</option>
-        </select>
-
-        <div class="cola-rate-section" style="display: none;">
-            <label>COLA Rate (%):</label>
-            <input type="number" step="0.1" name="fixed_income_cola_rate[]">
-        </div>
-
-        <label>Payment Duration:</label>
-        <select name="fixed_income_duration[]" class="duration-toggle">
-            <option value="life">For Life</option>
-            <option value="fixed">Fixed Term</option>
-        </select>
-
-        <div class="term-years-section" style="display: none;">
-            <label>Number of Years (Fixed Term):</label>
-            <input type="number" name="fixed_income_term_years[]">
-        </div>
-
-        <label>Spouse Benefit (%):</label>
-        <input type="number" step="0.1" name="fixed_income_spouse_benefit[]" required>
-
-        <button type="button" onclick="removeFixedIncomeItem(this)">Remove</button>
-    `;
-    container.appendChild(newItem);
-
-    // Re-attach event listeners for the new item
-    attachCOLAListeners(newItem);
-    attachDurationListeners(newItem);
-}
-
-// Remove a fixed income item
-function removeFixedIncomeItem(button) {
-    const item = button.parentNode;
-    item.parentNode.removeChild(item);
-}
-
-// Toggle display of COLA Rate field
+// Function to attach COLA listener to a fixed income item.
 function attachCOLAListeners(item) {
     const colaSelect = item.querySelector('.cola-toggle');
     const colaRateSection = item.querySelector('.cola-rate-section');
-    function toggleCOLA() {
-        if (colaSelect.value === 'yes') {
-            colaRateSection.style.display = 'block';
-        } else {
-            colaRateSection.style.display = 'none';
+    if (colaSelect && colaRateSection) {
+        function toggleCOLA() {
+            if (colaSelect.value === 'yes') {
+                colaRateSection.style.display = 'block';
+            } else {
+                colaRateSection.style.display = 'none';
+            }
         }
+        colaSelect.addEventListener('change', toggleCOLA);
+        toggleCOLA(); // Initialize on page load.
     }
-    colaSelect.addEventListener('change', toggleCOLA);
-    toggleCOLA(); // Initialize on load
 }
 
-// Toggle display of Term Years field
-function attachDurationListeners(item) {
-    const durationSelect = item.querySelector('.duration-toggle');
-    const termYearsSection = item.querySelector('.term-years-section');
-    function toggleDuration() {
-        if (durationSelect.value === 'fixed') {
-            termYearsSection.style.display = 'block';
-        } else {
-            termYearsSection.style.display = 'none';
-        }
-    }
-    durationSelect.addEventListener('change', toggleDuration);
-    toggleDuration(); // Initialize on load
+// Function to add a new fixed income item.
+function addFixedIncomeItem() {
+    const accordion = document.getElementById('fixedIncomeAccordion');
+    const firstItem = accordion.querySelector('.fixed-income-item');
+    const newItem = firstItem.cloneNode(true);
+
+    // Clear values in the cloned item.
+    const inputs = newItem.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
+    const selects = newItem.querySelectorAll('select');
+    selects.forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    // You would normally generate unique IDs for each new item here.
+    // For now, the cloned item is appended as-is.
+    accordion.appendChild(newItem);
+    attachCOLAListeners(newItem);
 }
 
-// Attach listeners for the default item on page load
+// Attach COLA listeners for the default item.
 document.addEventListener('DOMContentLoaded', function() {
-    const defaultItems = document.querySelectorAll('.fixed-income-item');
-    defaultItems.forEach(item => {
+    const fixedIncomeItems = document.querySelectorAll('.fixed-income-item');
+    fixedIncomeItems.forEach(item => {
         attachCOLAListeners(item);
-        attachDurationListeners(item);
     });
 });
 </script>

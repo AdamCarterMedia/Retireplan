@@ -1,103 +1,75 @@
 <?php
 // templates/pages/investment-income.php
 ?>
-<section class="collapsible">
-    <h2 class="collapsible-header">Investment Income</h2>
-    <div class="collapsible-content">
-        <form id="investment-income-form" method="post">
-            <fieldset>
-                <legend>Investment Accounts</legend>
-                <div id="investment-items">
-                    <!-- A single investment item is shown by default -->
-                    <div class="investment-item">
-                        <label>Name:</label>
-                        <input type="text" name="investment_name[]" required>
-
-                        <label>Account Owner:</label>
-                        <select name="investment_owner[]">
-                            <option value="User">User</option>
-                            <option value="Spouse">Spouse</option>
-                        </select>
-
-                        <label>Account Type:</label>
-                        <select name="investment_account_type[]">
-                            <option value="Traditional">Traditional</option>
-                            <option value="Roth">Roth</option>
-                        </select>
-
-                        <label>Current Balance ($):</label>
-                        <input type="number" step="0.01" name="investment_balance[]" required>
-
-                        <label>Monthly Contribution ($):</label>
-                        <input type="number" step="0.01" name="investment_contribution[]" required>
-
-                        <label>Investment Start Year (YYYY):</label>
-                        <input type="text" name="investment_start[]" required>
-
-                        <label>Expected Annual Growth Rate (%):</label>
-                        <input type="number" step="0.1" name="investment_growth[]" required>
-
-                        <label>After-Retirement Growth Rate (%):</label>
-                        <input type="number" step="0.1" name="investment_after_growth[]" required>
-
-                        <!-- A field or display for "Computed Total" might be shown dynamically in the results,
-                             so we won't add it here. -->
-
-                        <button type="button" onclick="removeInvestmentItem(this)">Remove</button>
-                    </div>
-                </div>
-                <button type="button" onclick="addInvestmentItem()">Add Investment Item</button>
-            </fieldset>
-            <button type="submit">Save Investment Income</button>
-        </form>
+<section class="mb-4">
+  <h2>Investment Income</h2>
+  <div id="investmentAccordion">
+    <!-- Investment Income Item (example) -->
+    <div class="card mb-3 investment-item">
+      <div class="card-header" id="investmentHeading1">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#investmentCollapse1" aria-expanded="true" aria-controls="investmentCollapse1">
+          <!-- Summary: Replace with dynamic calculation: "Adam's Traditional - $699,254" -->
+          <span class="investment-summary">Adam's Traditional - $699,254</span>
+        </button>
+      </div>
+      <div id="investmentCollapse1" class="collapse" aria-labelledby="investmentHeading1" data-bs-parent="#investmentAccordion">
+        <div class="card-body">
+          <!-- Investment Income Form Fields -->
+          <form>
+            <div class="mb-3">
+              <label>Name:</label>
+              <input type="text" name="investment_name[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Account Owner:</label>
+              <select name="investment_owner[]" class="form-select">
+                <option value="User">User</option>
+                <option value="Spouse">Spouse</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label>Account Type:</label>
+              <select name="investment_account_type[]" class="form-select">
+                <option value="Traditional">Traditional</option>
+                <option value="Roth">Roth</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label>Current Balance ($):</label>
+              <input type="number" step="0.01" name="investment_balance[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Monthly Contribution ($):</label>
+              <input type="number" step="0.01" name="investment_contribution[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Investment Start Year (YYYY):</label>
+              <input type="text" name="investment_start[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Expected Annual Growth Rate (%):</label>
+              <input type="number" step="0.1" name="investment_growth[]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>After-Retirement Growth Rate (%):</label>
+              <input type="number" step="0.1" name="investment_after_growth[]" class="form-control" required>
+            </div>
+            <!-- The computed total and RMD amount are calculated and displayed elsewhere -->
+          </form>
+        </div>
+      </div>
     </div>
+    <!-- Repeat similar blocks for additional investment items -->
+  </div>
+  <button type="button" class="btn btn-primary" onclick="addInvestmentItem()">Add Investment Income Item</button>
 </section>
 
 <script>
-// Add a new investment item
+// Example function for dynamic addition (similar to fixed income)
 function addInvestmentItem() {
-    const container = document.getElementById('investment-items');
-    const newItem = document.createElement('div');
-    newItem.classList.add('investment-item');
-    newItem.innerHTML = `
-        <label>Name:</label>
-        <input type="text" name="investment_name[]" required>
-
-        <label>Account Owner:</label>
-        <select name="investment_owner[]">
-            <option value="User">User</option>
-            <option value="Spouse">Spouse</option>
-        </select>
-
-        <label>Account Type:</label>
-        <select name="investment_account_type[]">
-            <option value="Traditional">Traditional</option>
-            <option value="Roth">Roth</option>
-        </select>
-
-        <label>Current Balance ($):</label>
-        <input type="number" step="0.01" name="investment_balance[]" required>
-
-        <label>Monthly Contribution ($):</label>
-        <input type="number" step="0.01" name="investment_contribution[]" required>
-
-        <label>Investment Start Year (YYYY):</label>
-        <input type="text" name="investment_start[]" required>
-
-        <label>Expected Annual Growth Rate (%):</label>
-        <input type="number" step="0.1" name="investment_growth[]" required>
-
-        <label>After-Retirement Growth Rate (%):</label>
-        <input type="number" step="0.1" name="investment_after_growth[]" required>
-
-        <button type="button" onclick="removeInvestmentItem(this)">Remove</button>
-    `;
-    container.appendChild(newItem);
-}
-
-// Remove an investment item
-function removeInvestmentItem(button) {
-    const item = button.parentNode;
-    item.parentNode.removeChild(item);
+  const accordion = document.getElementById('investmentAccordion');
+  const newItem = accordion.firstElementChild.cloneNode(true);
+  // Ensure you update IDs appropriately for new items.
+  accordion.appendChild(newItem);
 }
 </script>
